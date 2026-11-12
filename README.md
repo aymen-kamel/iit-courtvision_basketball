@@ -5,6 +5,13 @@
 Engineering research project — International Institute of Technology (IIT), Sfax, Tunisia.
 This is a student research project; it is not endorsed, supervised or validated by IIT unless stated otherwise.
 
+<p align="center">
+  <img src="docs/images/annotated_schematic.png" width="900"
+       alt="Schematic of the CourtVision output: two teams A1-A3 and B1-B3, referees R1-R2, one ball held by A2">
+  <br><em>Output style of the pipeline, shown on a synthetic court (real footage is not published).
+  Team A = A1–A3, team B = B1–B3, referees R1–R2, "*ball" = possession, orange circle and line = the single ball and its path.</em>
+</p>
+
 > **Status (12 November 2026): work in progress.** Detection, player tracking with a fixed roster, team
 > assignment and single-ball tracking run end to end. Shot detection, made/missed classification and court
 > mapping are not implemented yet. **No accuracy result has been measured against annotated ground truth yet**;
@@ -286,9 +293,11 @@ iit-courtvision/
 │   └── visualization/            annotate.py
 ├── scripts/
 │   ├── mark_court.py             click the court corners once for a fixed camera
-│   └── compare_models.py         same frames through several detectors, side by side
+│   ├── compare_models.py         same frames through several detectors, side by side
+│   └── make_figures.py           regenerates the README figures from run summaries (no video frames)
 ├── tests/                        60 tests: unit, synthetic end-to-end, 2 GPU tests
 ├── docs/PROJECT_GUIDE.md         complete guide: history, architecture, every file, every run
+├── docs/images/                  README figures (charts from real runs, synthetic schematic)
 ├── environment/                  phase records and the reference package list
 ├── RESEARCH_REPORT.md            research report, licence matrix, benchmark plan, roadmap, risks
 ├── MODEL_REGISTRY.md             all model candidates and their verification
@@ -322,6 +331,22 @@ against annotated ground truth.
 | Continuous wide shot 1 (295 frames) | 3 + 3 | each player 1 tracklet, 96–100 % of frames | 2 | detected 77 %, predicted 23 % |
 | Continuous wide shot 2 (264 frames) | 3 + 3 | each player 1 tracklet, 97–100 % of frames | 2 | detected 83 %, predicted 16 % |
 | Zoom + cut clip (249 frames) | 3 + 2 | fragmented | 1 | detected 74 %, missing 15 % |
+
+<p align="center"><img src="docs/images/identity_coverage.png" width="950"
+  alt="Bar charts of identity coverage per clip: about 96 to 100 percent per player on the two continuous clips"></p>
+
+On the two continuous clips each player is one unbroken identity for almost the whole clip; on the clip with a
+zoom and a camera cut, identities fragment, which is expected because the method assumes a fixed camera.
+
+<p align="center"><img src="docs/images/ball_states.png" width="800"
+  alt="Stacked bars of ball state per clip: detected 74 to 83 percent, the rest predicted or missing"></p>
+
+Exactly one ball record exists per frame. "Predicted" frames are short gaps bridged by motion; "missing" is
+reported instead of inventing a position. The "held" state did not fire on these clips because the detector still
+sees the ball in the holder's hands.
+
+<p align="center"><img src="docs/images/model_vram.png" width="760"
+  alt="Bar chart of peak GPU memory per model, all below 450 MB of the 6144 MB available"></p>
 
 Other measurements:
 
