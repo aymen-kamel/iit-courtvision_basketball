@@ -1,3 +1,10 @@
+<p align="center">
+  <img src="docs/images/banner.png" width="100%"
+       alt="Concept illustration: a 3v3 outdoor basketball game with player boxes A1-A3, B1-B3, a referee R1, a tracked ball and a court mini-map">
+  <br><sub><em>Concept illustration (AI-generated image), not an output of the pipeline. The court mini-map shown
+  here is planned, not implemented yet.</em></sub>
+</p>
+
 # IIT CourtVision
 
 **A Computer Vision Framework for Single-Camera Basketball Performance Analysis Using Deep Learning and Multi-Object Tracking**
