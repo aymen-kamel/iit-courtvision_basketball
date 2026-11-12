@@ -1,0 +1,61 @@
+# Default run configuration. Every key is optional; unknown keys are rejected.
+video:
+  stride: 1            # process every Nth frame (frame_idx / t_ms still refer to the source video)
+  max_frames: null     # stop after N processed frames (null = whole video)
+  batch_size: 4        # frames held in memory at once
+
+detector:
+  model_id: m1         # key in configs/models.yaml
+  short_side: 768      # detector input short side in px (rounded down to a multiple of 32)
+  thresholds:          # minimum confidence per standard class, applied after class mapping
+    player: 0.4
+    ball: 0.25
+    rim: 0.3
+    ball_in_basket: 0.55
+    referee: 0.3
+    holder: 0.4
+
+tracker:               # players only in this milestone
+  high_thresh: 0.5     # detections above this are matched first
+  low_thresh: 0.1      # detections between low and high rescue unmatched tracks
+  new_track_thresh: 0.6
+  match_iou: 0.2       # minimum IoU for the first association
+  low_match_iou: 0.5   # minimum IoU for the low-confidence association
+  min_hits: 2          # matched frames before a track gets an ID
+  track_buffer: 30     # processed frames a lost track is kept
+
+scene:
+  analysis_width: 160  # frames are downscaled to this width for cut/motion analysis
+  cut_mad: 0.15        # a frame is a scene cut if the grey difference after camera-shift compensation (0-1) is above this ...
+  cut_corr: 0.92       # ... or the grey-histogram correlation with the previous frame is below this
+  motion_px: 0.3       # phase-correlation shift (analysis px) counted as camera motion
+  moving_fraction_warn: 0.15
+
+court:                 # optional exact court area (fixed camera); see scripts/mark_court.py
+  polygon_file: null   # null = use "<video>.court.json" next to the video if it exists
+  margin_px: 30.0
+
+identity:              # stable roster: A1-A3, B1-B3 (two teams by jersey colour), R1-R2
+  players_per_team: 3
+  max_referees: 2
+  min_tracklet_frames: 5
+  use_osnet: true      # appearance model m4; false = jersey colour only
+  embed_every: 3
+  colour_weight: 0.5
+  merge_cost: 0.45
+  forced_merge_max: 0.85
+  continuity_bonus: 0.15
+  continuity_gap_s: 2.0
+  continuity_px: 250.0
+
+ball:                  # exactly one ball per frame
+  static_seconds: 1.0  # a 'ball' that stays put this long away from players is a distractor
+  static_radius_px: 25.0
+  near_person_px: 40.0
+  gate_px: 220.0
+  max_gap_s: 0.5
+  hand_height: 0.35
+
+output:
+  annotated_video: true
+  crf: 20              # H.264 quality (lower = better, larger)

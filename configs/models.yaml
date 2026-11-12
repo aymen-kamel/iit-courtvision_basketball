@@ -1,0 +1,103 @@
+# Model registry used by courtvision.detection.registry.
+# path: relative to <data_root>\checkpoints unless absolute.
+# licensed: false = no licence from the author -> private benchmarking only (needs --allow-private).
+# sha256: null = no published or recorded hash (a warning is logged).
+# class_map: model class name -> CourtVision standard class (player, ball, rim, ball_in_basket, referee, holder).
+#            Names are compared lower-case with '-' and '_' treated as spaces. Unlisted classes are dropped.
+# Verification status of each entry: see MODEL_REGISTRY.md and environment/PHASE1_RECORD.md.
+models:
+  m1:
+    description: OpenHoopVision RF-DETR Small basketball detector (amateur/youth footage)
+    backend: rfdetr
+    path: openhoopvision_core/rf-detr-basketball.pth
+    sha256: 69409cbefc4b92c3cd194fb7f877c6e58e52548909e05e3b5467fe0e2fe188c5
+    licensed: true
+    licence_note: Apache-2.0 stated in the repository README; no LICENSE file
+    class_map:
+      player: player
+      ball: ball
+      rim: rim
+      ball-in-basket: ball_in_basket
+      referee: referee
+      holder: holder
+
+  g1:
+    description: YOLO26m COCO baseline (person, sports ball), already on disk from SmartPlay
+    backend: ultralytics
+    path: C:\Users\dell\OneDrive\Bureau\pfe\padel_analytics_repo\padel_analytics_repo\weights\yolo26m.pt
+    sha256: 401cea9ab23ad19246ff7744859816bc599f350e93c9dd30367b6f0a0745d0b7  # recorded on first use, 2026-11-12
+    licensed: true
+    licence_note: AGPL-3.0 (Ultralytics)
+    imgsz: 960
+    class_map:
+      person: player
+      sports ball: ball
+
+  m16_player:
+    description: abdullahtarek player detector (NBA broadcast classes)
+    backend: ultralytics
+    path: abdullahtarek/player_detector.pt
+    sha256: 75c962ca04e92d756fa233289f19b421023eb826916d07fcab8707291f767bad
+    licensed: true
+    licence_note: MIT stated in the README; no LICENSE file
+    class_map:
+      Player: player
+      Ref: referee
+      Ball: ball
+      Hoop: rim
+
+  m16_ball:
+    description: abdullahtarek "ball" detector (same 7 broadcast classes as the player model)
+    backend: ultralytics
+    path: abdullahtarek/ball_detector_model.pt
+    sha256: 01e0d38cee7735366f5ba5e5a0ae77adc25006cfa3cd5d364789414cc76398ea
+    licensed: true
+    licence_note: MIT stated in the README; no LICENSE file
+    class_map:
+      Ball: ball
+      Hoop: rim
+
+  m14a:
+    description: Swish-Vision YOLOv8n (basketball, rim, sports ball)
+    backend: ultralytics
+    path: private_unlicensed/swish_vision/best.pt
+    sha256: d3a52414eb0970661d98473663a858ce7c05db6d8a6e107a413d2c714231d43f
+    licensed: false
+    licence_note: repository has no licence; private benchmarking only
+    class_map:
+      basketball: ball
+      sports ball: ball
+      rim: rim
+
+  m14b:
+    description: Swish-Vision YOLOv8s (Basketball, Rim)
+    backend: ultralytics
+    path: private_unlicensed/swish_vision/ballRim.pt
+    sha256: 56b7b23d63aedfa01cd0b4ffe9ffe97444ca80ffa934dc736b1c5ed91d0f940a
+    licensed: false
+    licence_note: repository has no licence; private benchmarking only
+    class_map:
+      Basketball: ball
+      Rim: rim
+
+  m14c:
+    description: Swish-Vision bestYT YOLOv8n (ball, rim, net, shooting, dribbling, score ...; provenance unclear)
+    backend: ultralytics
+    path: private_unlicensed/swish_vision/bestYT.pt
+    sha256: 010376003d9c899ce49b71f8825253c5e2a32501bd11cfddc2e3e0018dab21f2
+    licensed: false
+    licence_note: repository has no licence and the model was trained by a third party; private benchmarking only
+    class_map:
+      ball: ball
+      rim: rim
+
+  m15:
+    description: avishah3 YOLOv8n (Basketball, Basketball Hoop)
+    backend: ultralytics
+    path: private_unlicensed/avishah3/best.pt
+    sha256: 72c1e7c64cc6054db3dc5429385630f81c2136f5935fed546e6887bfe158d306
+    licensed: false
+    licence_note: repository has no licence; private benchmarking only
+    class_map:
+      Basketball: ball
+      Basketball Hoop: rim

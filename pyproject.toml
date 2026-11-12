@@ -1,0 +1,28 @@
+[project]
+name = "iit-courtvision"
+version = "0.1.0"
+description = "Single-camera basketball detection, tracking and analytics research framework (IIT, Sfax)"
+requires-python = ">=3.11"
+# Declared, NOT installed by this project. Development uses the existing SmartPlay venv
+# (torch 2.7.1+cu118, rfdetr 1.12, opencv 4.11, scipy, numpy 2.3, pyyaml, imageio-ffmpeg).
+dependencies = [
+  "numpy>=2.0",
+  "opencv-python>=4.10",
+  "pyyaml>=6.0",
+  "scipy>=1.11",
+  "torch>=2.5",
+  "rfdetr>=1.9",
+  "imageio-ffmpeg>=0.5",
+]
+
+[project.optional-dependencies]
+ultralytics = ["ultralytics>=8.3"]   # AGPL-3.0: only for the COCO baseline and private comparisons
+dev = ["pytest>=7.4"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q -p no:cacheprovider"
+markers = [
+  "gpu: needs a CUDA GPU and the model checkpoints from Phase 1 (skipped when absent)",
+]

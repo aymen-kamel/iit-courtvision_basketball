@@ -1,0 +1,27 @@
+# Data, media and model files never go in git
+videos/
+datasets/
+results/
+runs/
+*.mp4
+*.mov
+*.avi
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+*.engine
+*.pkl
+*.tar
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
+
+# Local
+.env
+*.log
